@@ -1,25 +1,37 @@
-function Validar-Archivo {
-    param ([string]$Ruta)
+#<<Editado por Mikel Eduardo Jonguitud Hern·ndez>>  
+#<<20/08/2025>>
+$usuarios = Get-LocalUser 
 
-    try {
-        if (Test-Path $Ruta) {
-            $contenido = Get-Content $Ruta -ErrorAction Stop
-            return "üìÑ Archivo encontrado y accesible: $Ruta"
-        } else {
-            throw "El archivo no existe."
-        }
-    }
-    catch {
-        return "‚ö†Ô∏è Error: $_"
-    }
-    finally {
-        Write-Host "üìù Validaci√≥n finalizada para: $Ruta" -ForegroundColor Cyan
-    }
-}
+$sinLogon = @() 
 
-# Prueba de la funci√≥n
-Validar-Archivo -Ruta "C:\archivo_inexistente.txt"
-#Aseg√∫rate de crear un archivo txt con el nombre archivo en el Escritorio
-Validar-Archivo -Ruta "$env:USERPROFILE\Desktop\archivo.txt"
+$conLogon = @() 
 
- 
+foreach ($u in $usuarios) { 
+
+    if (-not $u.LastLogon) { 
+
+        $sinLogon += "$($u.Name): Estado = $($u.Enabled), ⁄ltimo acceso = NUNCA" 
+
+    } else { 
+
+        $conLogon += "$($u.Name): Estado = $($u.Enabled), ⁄ltimo acceso = $($u.LastLogon)" 
+
+    } 
+
+} 
+
+# Guardar en archivos separados 
+
+$sinLogon | Out-File -FilePath "$env:USERPROFILE\Desktop\usuarios_sin_logon.txt" 
+
+$conLogon | Out-File -FilePath "$env:USERPROFILE\Desktop\usuarios_con_logon.txt" 
+
+# Mostrar en pantalla 
+
+Write-Output "`n Usuarios que NUNCA han iniciado sesiÛn:" 
+
+$sinLogon | ForEach-Object { Write-Output $_ } 
+
+Write-Output "`n Usuarios que SÕ han iniciado sesiÛn:" 
+
+$conLogon | ForEach-Object { Write-Output $_ } 
