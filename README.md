@@ -1,25 +1,18 @@
-# PowerShell-Ciberseguridad
-Tarea de FCFM
+# Verificador de correos comprometidos – Have I Been Pwned
 
-# Scripts de Ciberseguridad  
-Este repositorio contiene diferentes scripts desarrollados en el marco de mi formación en **Seguridad en Tecnologías de la Información (LSTI)**
-### 1. Auditoría de usuarios locales (`auditoria_usuarios.ps1`)
-- **Descripción**: Recorre los usuarios locales de Windows y los clasifica en dos grupos:  
-  - Usuarios que **nunca han iniciado sesión**.  
-  - Usuarios que **sí han iniciado sesión** (mostrando la última fecha).  
-- **Salidas**:  
-  - `usuarios_sin_logon.txt` → Usuarios sin inicio de sesión.  
-  - `usuarios_con_logon.txt` → Usuarios con registro de inicio de sesión.  
-- **Tareas de ciberseguridad que resuelve**:  
-  - Detección de cuentas inactivas que podrían representar un **riesgo de seguridad**.  
-  - Apoyo en la **auditoría de cuentas** para administración de accesos.  
+Este proyecto permite verificar si una cuenta de correo electrónico ha sido comprometida en brechas de seguridad conocidas, utilizando la API oficial de **Have I Been Pwned**.  
+El script automatiza la consulta, genera un reporte en formato CSV con los detalles de las brechas y mantiene un registro en un archivo de log.
 
-### 2. Validación de archivos (`validar_archivo.ps1`)
-- **Descripción**: Valida si un archivo existe y es accesible en el sistema.  
-  - Si existe, muestra el mensaje de confirmación.  
-  - Si no existe, captura el error y devuelve una alerta clara.  
-  - Utiliza `try/catch/finally` para el manejo adecuado de excepciones.  
-- **Ejemplo de uso**:
-  ```powershell
-  Validar-Archivo -Ruta "C:\archivo_inexistente.txt"
-  Validar-Archivo -Ruta "$env:USERPROFILE\Desktop\archivo.txt"
+Requisitos
+
+- Python 3.8 o superior  
+- Una **API key válida** de Have I Been Pwned  
+- Conexión a internet  
+
+Instalación
+
+Clona este repositorio y entra en la carpeta del proyecto:  
+
+bash
+git clone https://github.com/tuusuario/tu-repositorio.git
+cd tu-repositorio
